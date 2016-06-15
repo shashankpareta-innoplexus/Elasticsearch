@@ -1,0 +1,57 @@
+mapping = {
+   "people": {
+      "mappings": {
+         "students": {
+            "properties": {
+               "about": {
+                  "type": "string",
+                  "index": "analyzed"
+               },
+               "address": {
+                  "type": "string",
+                  "index": "analyzed"
+               },
+               "company": {
+                  "type": "string",
+                  "index": "analyzed"
+               },
+               "name": {
+                  "type": "string",
+                  "index": "analyzed"
+               }
+            },
+            "dynamic_date_formats": ["MM/dd/yyyy"],
+            "dynamic_templates" : [
+                {
+                    "my_long_template" : {
+                        "match_mapping_type" : "long",
+                        "unmatch":"term_*",
+                        "mapping" : {
+                            "type" : "integer"
+                        }
+                    }
+                },
+                {
+                    "my_term_template":{
+                        "match" : "term_*",
+                        "unmatch": "*_mob",
+                        "mapping" : {
+                            "type": "String",
+                            "index" : "not_analyzed"
+                        }
+                    }
+                },
+                {
+                    "my_mob_template":{
+                        "match": "*_mob",
+                        "mapping":{
+                            "type" : "String",
+                            "index": "analyzed"
+                        }
+                    }
+                }
+            ]
+         }
+      }
+   }
+}
