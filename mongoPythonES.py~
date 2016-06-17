@@ -1,4 +1,5 @@
 from mongoengine import *
+from elasticsearch import helpers
 import elasticsearch
 import json
 
@@ -42,8 +43,27 @@ class DummyDataEncoder(json.JSONEncoder):
             return obj.to_dict()
         return json.JSONEncoder.default(self, obj)
 
+# this is for entering data to ES one by one
+# i=1
+# for dummy in DummyData.objects:
+#     dummy_json = json.dumps(dummy, cls=DummyDataEncoder)
+#     es.index(index='test', doc_type='dummydata', id=i, body=dummy_json)
+#     i=i+1
+
+
+# this is for entering data to ES using bulk api
 i=1
-dummy_json = json.dumps(dummy, cls=DummyDataEncoder)
+actions = []
 for dummy in DummyData.objects:
-    es.index(index='test', doc_type='dummydata', id=i, body=dummy_json)
+    dummy_json = json.dumps(dummy, cls=DummyDataEncoder)
+    action = {
+        "_index" : "testbulk",
+        "_type" : "type1",
+        "_id" : i,
+        "_source": dummy_json
+        }
+    actions.append(action)
     i=i+1
+
+if(len(actions)>0):
+    helpers.bulk(es, actions)
