@@ -67,3 +67,9 @@ for dummy in DummyData.objects:
 
 if(len(actions)>0):
     helpers.bulk(es, actions)
+
+# Blockers with mongoPython.py :
+# 1. We will always need to manually enter each field when reading different type data from mongodb.
+# 2. This worked for sample simple data like dummy_json but will need to be improved for nested json objects data
+# 3. One solution can be to get jsonfile containing collections itself while reading from mongo.
+#    At present, I have used an ORM 'mongoengine'. Instead different library has to be searched.
