@@ -1,0 +1,112 @@
+{
+  "settings":{
+    "analysis":{
+      "analyzer":{
+        "analyzer1_shingle":{
+            "type": "custom",
+            "tokenizer":"tokenizer1_standard",
+            "filter":["filter1_lowercase", "filter2_shingles", "filter3_stop", "filter4_synonym"]
+        }
+      },
+        "tokenizer":{
+          "tokenizer1_standard":{
+            "type": "standard",
+            "max_token_length": "500"
+          }
+        },
+        "filter":{
+          "filter1_lowercase":{
+            "type": "lowercase"
+          },
+          "filter2_shingles":{
+            "type":"shingle",
+            "min_shingle_size":"2",
+            "max_shingle_size":"3",
+            "token_separator": " "
+          },
+          "filter3_stop":{
+            "type":"stop",
+            "stopwords":"_english_"
+          },
+          "filter4_synonym":{
+            "type":"synonym",
+            "format":"wordnet",
+            "synonyms": [
+              "s(100000001,1,'abstain',v,1,0).",
+                "s(100000001,2,'refrain',v,1,0).",
+                "s(100000001,3,'desist',v,1,0)."
+            ]
+          }
+        },
+        "char_filter":{
+          "char_filter1_html":{
+            "type":"html_strip"
+          }
+        }
+      }
+    },
+    "mappings": {
+       "sample_patents": {
+       "date_detection":"true",
+          "dynamic_templates" : [
+              {
+                  "numeric_fields" : {
+                      "match_mapping_type" : "integer | long",
+                      "mapping" : {
+                          "coerce":"true",
+                          "doc_values":"true",
+                          "include_in_all":"true",
+                          "index":"not_analyzed",
+                          "type" : "long",
+                          "store":"true"
+                      }
+                  }
+              },
+              {
+                  "object_fields" : {
+                      "match_mapping_type" : "object",
+                      "mapping" : {
+                          "type" : "nested",
+                          "dynamic": "true",
+                          "include_in_all" : "true"
+                      }
+                  }
+              },
+              {
+                  "date_fields" : {
+                      "match_mapping_type" : "date",
+                      "mapping" : {
+                          "doc_values" : "true",
+                          "format" : "yyyy-MM-dd || dd-MM-yyyy || MM-dd-yyyy",
+                          "include_in_all" : "true",
+                          "index": "not_analyzed",
+                          "store" : "true",
+                          "type" : "date"
+                      }
+                  }
+              },
+              {
+                  "boolean_fields" : {
+                      "match_mapping_type" : "boolean",
+                      "mapping" : {
+                          "doc_values" : "true",
+                          "type" : "boolean",
+                          "include_in_all" : "false"
+                      }
+                  }
+              },
+              {
+                  "string_fields" : {
+                      "match_mapping_type" : "string",
+                      "mapping" : {
+                          "type" : "string",
+                          "analyzer": "analyzer1_shingle",
+                          "position_increment_gap": "50",
+                          "term_vector" : "with_positions"
+                      }
+                  }
+              }
+          ]
+       }
+    }
+}
