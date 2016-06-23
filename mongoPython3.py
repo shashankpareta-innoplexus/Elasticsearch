@@ -44,6 +44,7 @@ for x in objectId:
     print i
     i=i+1
 
+# this adds data to elasticsearch using bulk api
 if(len(actions)>0):
     helpers.bulk(es, actions, chunk_size=50)
 
