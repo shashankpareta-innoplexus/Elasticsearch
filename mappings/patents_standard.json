@@ -5,13 +5,13 @@
         "analyzer1_standard":{
             "type":"custom",
             "tokenizer":"tokenizer1_standard",
-            "filter": ["filter3_synonym"]
+            "filter": ["lowercase","filter3_synonym"]
         }
       },
         "tokenizer":{
           "tokenizer1_standard":{
             "type": "standard",
-            "max_token_length": "500"
+            "max_token_length": "256"
           }
         },
         "filter":{
@@ -30,10 +30,11 @@
     "mappings": {
        "sample_patents": {
        "date_detection":"true",
+       "dynamic_date_formats" : ["dd/MM/yyyy", "yyyy/MM/dd"],
           "dynamic_templates" : [
               {
                   "numeric_fields" : {
-                      "match_mapping_type" : "integer | long",
+                      "match_mapping_type" : "integer || long",
                       "mapping" : {
                           "coerce":"true",
                           "doc_values":"true",
@@ -59,10 +60,10 @@
                       "match_mapping_type" : "date",
                       "mapping" : {
                           "doc_values" : "true",
-                          "format" : "yyyy-MM-dd || dd-MM-yyyy || MM-dd-yyyy",
                           "include_in_all" : "true",
                           "index": "not_analyzed",
                           "store" : "true",
+                          "format" : "yyyy/MM/dd || dd/MM/yyyy",
                           "type" : "date"
                       }
                   }
