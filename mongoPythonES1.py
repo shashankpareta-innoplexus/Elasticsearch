@@ -3,13 +3,18 @@ from elasticsearch import helpers
 import elasticsearch
 import json
 
+# creating es client
 es = elasticsearch.Elasticsearch()
+# connecting to test database in mongodb
 connect('test')
 
 class DummyData(Document):
+    # Document is parent class in mongoengine 
     meta = {
+        # collection is named dummycollection in test database
         'collection' : 'dummycollection'
     }
+    # defined all fields as in our dummy collection
     term_guid = StringField()
     term_balance = StringField()
     term_age = StringField()
@@ -22,6 +27,7 @@ class DummyData(Document):
     address = StringField()
     about = StringField()
 
+    #  create dictionary from fields in mongoDB
     def to_dict(self):
         return {
             'term_guid': self.term_guid,
@@ -37,6 +43,7 @@ class DummyData(Document):
             'about': self.about
         }
 
+# converting dictionary into json file
 class DummyDataEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, DummyData):
@@ -51,7 +58,7 @@ class DummyDataEncoder(json.JSONEncoder):
 #     i=i+1
 
 
-# this is for entering data to ES using bulk api
+# this is for entering data to ES using bulk api into index named testbulk and type is type1
 i=1
 actions = []
 for dummy in DummyData.objects:
@@ -65,8 +72,10 @@ for dummy in DummyData.objects:
     actions.append(action)
     i=i+1
 
+# dumping data in ES using bulk api
 if(len(actions)>0):
     helpers.bulk(es, actions)
+
 
 # Blockers with mongoPython.py :
 # 1. We will always need to manually enter each field when reading different type data from mongodb.
