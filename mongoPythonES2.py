@@ -11,24 +11,26 @@ es = elasticsearch.Elasticsearch()
 # connection to mongoDB
 connection = MongoClient('localhost',27017)
 
-# getting collection
-db = connection.congresses.sample_congresses
+# getting collection from database 
+db = connection.db_name.collection_name
 
+# getting all object Ids of mongo and converting them to string, then storing them in array
 objectId = []
 j=0
+# getting all documents of db in a
 a = db.find()
 for j in range(db.count()):
     A = a.next()
     x = str(A['_id'])
     objectId.append(x)
-    # print A['_id']
     j=j+1
 
-#print 'Fetched object ids'
+# getting all documents from db in b leaving '_id' field
 b = db.find({},{'_id':0})
 
 i=0
-# this contain list of actions i.e. indexing to be performed on all json objects
+# this contain list of actions i.e. indexing to be performed on all documents and then dumping them into ES.
+# Index name is 'patents_standard' and type is 'sample_patents'
 actions = []
 for x in objectId:
 # for i in range(db.count()):
