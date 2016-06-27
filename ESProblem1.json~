@@ -1,0 +1,28 @@
+GET hospital_data/sample_data/_search
+{
+    "size": 0, 
+    "query": {
+        "nested": {
+           "path": "tag_v3",
+           "query": {
+               "match": {
+                  "tag_v3.catagory": "onco"
+               }
+           }
+        }
+    }, 
+    "aggs": {
+        "agg1": { 
+        "nested": {
+            "path": "tag_v3"
+            },
+        "aggs": {
+            "agg2": {
+            "terms": { 
+                "field":    "tag_v3.indication"
+                }
+        }
+      }
+    }
+  }
+}

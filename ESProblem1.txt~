@@ -1,0 +1,39 @@
+/*************************************/
+For dataset like this:
+	object_name : {
+		key1 : "value1",
+		key2 : "value2"	
+	}
+
+We can use below query and aggregation. This first applies queries on first key and then aggregates on second key of results.
+
+
+GET hospital_data/sample_data/_search
+{
+    "size": 0, 
+    "query": {
+        "nested": {
+           "path": "object_name",
+           "query": {
+               "match": {
+                  "object_name.key1": "value1"
+               }
+           }
+        }
+    }, 
+    "aggs": {
+        "agg1": { 
+        "nested": {
+            "path": "object_name"
+            },
+        "aggs": {
+            "agg2": {
+            "terms": { 
+                "field": "object_name.key2"
+                }
+        }
+      }
+    }
+  }
+}
+
