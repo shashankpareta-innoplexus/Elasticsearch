@@ -1,0 +1,91 @@
+{
+  "settings":{
+    "analysis":{
+      "analyzer":{
+        "analyzer1_nGram":{
+            "type": "custom",
+            "tokenizer" : "tokenizer1_nGram",
+            "filter": ["filter1_lowercase"]
+        }
+      },
+        "tokenizer":{
+          "tokenizer1_nGram":{
+            "type":"nGram",
+            "min_gram":"2",
+            "max_gram":"5",
+            "token_chars":["letter", "digit"]
+          }
+        },
+        "filter":{
+          "filter1_lowercase":{
+            "type": "lowercase"
+          }
+        }
+      }
+    },
+    "mappings": {
+       "sample_patents": {
+       "date_detection":"true",
+       "dynamic_date_formats" : ["dd/MM/yyyy", "yyyy/MM/dd"],
+          "dynamic_templates" : [
+              {
+                  "numeric_fields" : {
+                      "match_mapping_type" : "integer || long",
+                      "mapping" : {
+                          "coerce":"true",
+                          "doc_values":"true",
+                          "include_in_all":"true",
+                          "index":"not_analyzed",
+                          "type" : "long",
+                          "store":"true"
+                      }
+                  }
+              },
+              {
+                  "object_fields" : {
+                      "match_mapping_type" : "object",
+                      "mapping" : {
+                          "type" : "nested",
+                          "dynamic": "true",
+                          "include_in_all" : "true"
+                      }
+                  }
+              },
+              {
+                  "date_fields" : {
+                      "match_mapping_type" : "date",
+                      "mapping" : {
+                          "doc_values" : "true",
+                          "format" : "yyyy/MM/dd || dd/MM/yyyy",
+                          "include_in_all" : "true",
+                          "index": "not_analyzed",
+                          "store" : "true",
+                          "type" : "date"
+                      }
+                  }
+              },
+              {
+                  "boolean_fields" : {
+                      "match_mapping_type" : "boolean",
+                      "mapping" : {
+                          "doc_values" : "true",
+                          "type" : "boolean",
+                          "include_in_all" : "false"
+                      }
+                  }
+              },
+              {
+                  "string_fields" : {
+                      "match_mapping_type" : "string",
+                      "mapping" : {
+                          "type" : "string",
+                          "analyzer": "analyzer1_nGram",
+                          "include_in_all" : "false",
+                          "ignore_above" : "256"
+                      }
+                  }
+              }
+          ]
+       }
+    }
+}
