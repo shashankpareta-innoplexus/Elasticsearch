@@ -2,7 +2,7 @@
 For dataset like this:
 	object_name : {
 		key1 : "value1",
-		key2 : "value2"
+		key2 : "value2"	
 	}
 
 We want to first apply queries on first key and then aggregates results on second key.
@@ -12,7 +12,7 @@ We want to first apply queries on first key and then aggregates results on secon
 
 GET index_name/type/_search
 {
-    "size": 0,
+    "size": 0, 
     "query": {
         "nested": {
            "path": "object_name",
@@ -22,15 +22,15 @@ GET index_name/type/_search
                }
            }
         }
-    },
+    }, 
     "aggs": {
-        "agg_name1": {
+        "agg_name1": { 
         "nested": {
             "path": "object_name"
             },
         "aggs": {
             "agg_name2": {
-            "terms": {
+            "terms": { 
                 "field": "object_name.key2"
                 }
         }
@@ -39,5 +39,3 @@ GET index_name/type/_search
   }
 }
 
-
-# reference: https://www.elastic.co/guide/en/elasticsearch/guide/current/_scoping_aggregations.html

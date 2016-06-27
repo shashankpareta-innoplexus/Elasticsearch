@@ -1,0 +1,20 @@
+
+
+
+
+POST index_name/type/id/_update
+{   
+    "doc":{
+            "fieldname":"updated value"
+    }
+}
+
+
+
+
+
+
+
+
+
+#reference: https://www.elastic.co/guide/en/elasticsearch/guide/current/partial-updates.html
