@@ -28,7 +28,7 @@
       }
     },
     "mappings": {
-       "sample_patents": {
+       "sample_data": {
        "date_detection":"true",
        "dynamic_date_formats" : ["dd/MM/yyyy", "yyyy/MM/dd"],
           "dynamic_templates" : [

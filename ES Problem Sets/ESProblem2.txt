@@ -1,20 +1,38 @@
+/****** Problem *********/
+
+Update field values without using doc_id but from matching query results.
 
 
+/******* Solution ******/
+
+POST index_name/type_name/_update_by_query
+{
+    "query":{
+        "match": {
+           "field": "value"
+        }
+    },
+  "script" : {
+    "lang": "groovy",
+    "script_file": "script_file_name_in_config",
+    "params": {
+      "parameter_name": "updated value"
+    }
+  }
+}
+
+In ../elasticsearch/config/scripts/file_name.groovy, write
+ctx._source.fieldname = parameter_name
 
 
+/************************************************/
+
+// for updating particular doc using doc_id
 POST index_name/type/id/_update
-{   
+{
     "doc":{
             "fieldname":"updated value"
     }
 }
-
-
-
-
-
-
-
-
 
 #reference: https://www.elastic.co/guide/en/elasticsearch/guide/current/partial-updates.html

@@ -1,15 +1,57 @@
 /**	Problem 1	**/
 For dataset like this:
-	object_name : {
-		key1 : "value1",
-		key2 : "value2"
-	}
+	array_name : [
+		{
+			key1 : "abc",
+			key2 : "xyz"
+		},
+		{
+			key1 : "abc2",
+			key2 : "xyz2"
+		},
+		{
+			key1 : "abc",
+			key2 : "xyz3"
+		},
+	]
 
-We want to first apply queries on first key and then aggregates results on second key.
+We want to first apply queries on first key and then aggregate results on second key of same object of result set.
+For example, I want all values of key2 when key1 equals "abc" i.e. output should be xyz and xyz3 not xyz2.
 
 
 /** 	Solution	**/
 
+GET index_name/type_name/_search
+{
+    "size": 0,
+    "aggs": {
+        "agg1": {
+        "nested": {
+            "path": "fieldname"
+            },
+        "aggs": {
+            "agg2": {
+            "filter":{
+                "term": {
+                   "fieldname.key1": "value1"
+                }
+            },
+            "aggs":{
+                "agg3":{
+                    "terms": {
+                    "field":    "fieldname.key2"
+                    }
+                }
+            }
+        }
+      }
+    }
+  }
+}
+
+/*********************************************************/
+
+// used for querying and aggregating nested object_fields
 GET index_name/type/_search
 {
     "size": 0,
@@ -38,6 +80,5 @@ GET index_name/type/_search
     }
   }
 }
-
 
 # reference: https://www.elastic.co/guide/en/elasticsearch/guide/current/_scoping_aggregations.html

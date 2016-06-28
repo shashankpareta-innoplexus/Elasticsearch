@@ -1,0 +1,75 @@
+{
+  "settings":{
+    "analysis":{
+      "analyzer":{
+        "autocomplete":{
+            "type": "custom",
+            "tokenizer" : "tokenizer1_nGram",
+            "filter": ["filter1_lowercase", "filter2_shingles"]
+        }
+      },
+        "tokenizer":{
+          "tokenizer1_nGram":{
+            "type":"nGram",
+            "min_gram":"1",
+            "max_gram":"10",
+            "token_chars":["letter", "digit"]
+          }
+        },
+        "filter":{
+          "filter1_lowercase":{
+            "type": "lowercase"
+          },
+          "filter2_shingles":{
+            "type":"shingle",
+            "min_shingle_size":"2",
+            "max_shingle_size":"3",
+            "token_separator": " ",
+            "output_unigrams" : "true"
+          }
+        }
+      }
+    },
+    "mappings" : {
+   "endo_author_list": {
+      "date_detection": "False",
+      "dynamic_templates": [
+         {
+            "string_fields": {
+               "mapping": {
+                  "type": "string",
+                  "fields": {
+                     "raw": {
+                        "index": "not_analyzed",
+                        "ignore_above": 256,
+                        "type": "string"
+                     }
+                  }
+               },
+               "match_mapping_type": "string",
+               "match": "*",
+               "unmatch" : "name"
+            }
+         }
+      ],
+      "properties": {
+         "name": {
+            "type": "multi_field",
+            "fields": {
+               "raw": {
+                  "index": "not_analyzed",
+                  "ignore_above": 256,
+                  "type": "string"
+               },
+               "autocomplete": {
+                  "type": "string",
+                  "analyzer": "autocomplete",
+                  "search_analyzer": "standard"
+               }
+            }
+         }
+
+      }
+   }
+}
+}
