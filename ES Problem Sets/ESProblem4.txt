@@ -1,0 +1,29 @@
+/********* Problem *********/
+
+Apply range aggregation on float fields
+
+
+/******* Solution *********/
+
+GET test_float_range_agg/sample_data/_search
+{
+    "size": 0,
+    "_source": ["term_age"],
+    "query": {
+        "match_all": {}
+    },
+    "aggs":{
+        "age_agg":{
+            "range":{
+                "field" : "term_age",
+                "ranges": [
+                    { "to" : 33.4 },
+                    { "from" : 35.2, "to" : 37.2 },
+                    { "from" : 40.5 }
+                ]
+            }
+        }
+    }
+}
+
+First define float numeric type in mapping and then apply range aggregation, it works.

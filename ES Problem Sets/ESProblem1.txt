@@ -1,4 +1,4 @@
-/**	Problem 1	**/
+/**	Problem	**/
 For dataset like this:
 	array_name : [
 		{

@@ -1,0 +1,23 @@
+/************  Problem ********/
+
+How to alter size of query so that we get all responses rather than only top 10 by default?
+
+/*********** Solution ********/
+
+I think its not possible in one single query, the feasible solution is to get hits in first query and then
+again request to  get all results. One more solution is to use Scroll API provided by ES. However,
+it is suggested not to use it in real time requests but preferred only for processing large data sets
+i.e. for reindexing.
+
+
+
+/*********** Problem *********/
+
+Can we alter fieldname in Elasticsearch ?
+
+/*********** Solution ********/
+
+Field name can't  be changed. We will have to delete our index, create the mapping with the name
+we want, and re-index our data.
+
+https://discuss.elastic.co/t/how-to-alter-elasticsearch-field-name/41458

@@ -1,0 +1,29 @@
+/********   Problem   *************/
+
+Sum aggregation on double values giving absurd values ??
+
+/********  Solution   ************/
+
+Case 1: Due to document duplication. In my case, first time the documents were indexed twice on server.
+Due to this, I was getting average correct but sum was exactly twice. When I deleted index and reindexed,
+problem was solved automatically.
+
+Case 2: Does it matter if I apply sum aggregation on field with long or double ?
+The Sum Aggregation (and most of the numeric metric aggregations) compute results as a
+double regardless of the field type.. To get a long value from this, you will need to do
+the conversion from double to long in your application.
+Reference: https://discuss.elastic.co/t/aggregation-sum-return-long-value-as-double/25584/2
+
+Case 3: This issue may be because of an issue in ES 1.x
+"If two of your shards get a document at the same time, and one is mapped as a
+long and the other one as a double, then the master node will reject the 2nd mapping
+which is applied, but the shard with the wrong mapping will continue to index documents using the
+wrong type. Usually, the problem becomes visible when nodes are moved around, because then
+elasticsearch starts either interpreting some double bits as longs (and you would see huge number)
+or long bits as double (and you would typically see tiny numbers, like here). When hit by this bug,
+there is not other choice but to reindex. One way to prevent it from happening again in the future
+would be to configure mappings explicitely.
+On 2.0, this issue will be fixed as dynamic mappings will have to be validated on the
+master node first before being applied. You can look at https://github.com/elastic/elasticsearch/pull/106347
+for more information. "
+Reference: https://discuss.elastic.co/t/sum-aggregation-returning-very-small-unrelated-values/26890/3
