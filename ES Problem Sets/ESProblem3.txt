@@ -1,0 +1,49 @@
+/******* Problem **********/
+
+Apply multifield aggregation
+
+
+/****** Solution *********/
+
+- One solution is that use copy_to field in mapping to create a third field in which we need to apply aggregations
+
+- Second solution is :
+
+GET index_name/type_name/_search
+{
+  "size": 0,
+  "query": {
+      "match_all": {}       // it can be any query
+  },
+  "aggs":{
+      "agg_name":{
+          "terms":{
+              "script" : {
+                "lang": "groovy",
+                "script_file": "your_script_name_in_config"
+              }
+          }
+      }
+  }
+}
+
+and in config script add this:
+doc['field_name1'].values + doc['field_name2'].values
+
+However, this is not performant solution. Thus, if we want to use terms aggregation on multiple fields, then
+this is not the best solution. Rather use solution one.
+
+
+There was a reason why ES has not introduced multi field aggregation as they say that this will be much slower
+and heavier than normal aggregation.  In the exact words of Clinton gromley :
+
+"The reason why we're not planning on supporting this directly is that it would be much slower and heavier
+than a normal terms aggregation. The terms agg uses global ordinals (rather than concrete values) for counting,
+but the global ordinals for two different fields are completely separate, so we would have to look up each
+concrete value independently, which would be a huge performance cost. With the above solutions, the performance
+cost is obvious to the user: either you pay the price at aggregation time (with a script) or
+at index time (with the copy_to) field. We'd rather make this cost obvious to the user,
+instead of providing functionality which performs poorly."
+
+Reference:
+https://github.com/elastic/elasticsearch/issues/5100
