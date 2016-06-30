@@ -1,0 +1,5 @@
+
+"{""index"":""oilbird"",""type"":""ivf_social_media_total_data_31032016"",""body"":{""fields"":[""technologies_v1""],""aggs"":{""distinct"":{""terms"":{""field"":""technologies_v1.raw"",""size"":0}}}}}
+
+For each technology:
+{index: ""oilbird"",type: ""ivf_social_media_total_data_31032016"",body: {""query"": {""term"": {""technologies_v1.raw"": result[index].key}},""aggs"": {""distinct"":{""terms"": {""field"": ""source.raw"",""size"": 0}}}}}"

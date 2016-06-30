@@ -1,0 +1,80 @@
+doc values stores fields that you can lookup by document. It seems that
+these fields are clustered on disk by field instead of by document, which makes it more
+efficient to retrieve a lot of the same field from different documents (sorting, aggregations, etc).
+This is done instead of caching all stored fields in memory for those operations
+
+
+All i can tell you is that while it is customary for docValues to represent fields stored in a columnar
+manner (which as you pointed out , makes it easier for bulk retrieval needed for sorting or even function queries),
+lucene treats docValues as separate fields themselves.
+
+So while in elasticsearch you enable docvalues on field foo and end up with the same data duplicated,
+underneath lucene will create a docValues field for each document and copy the data from the foo
+field to it. So in effect there is no guarantee at the lucene level that the data is duplicated,
+but there is one at the elasticsearch level.
+
+http://stackoverflow.com/questions/24440847/if-doc-values-are-used-for-a-field-in-elasticsearch-is-storing-that-field-redun
+
+When you call doc(), it will go to the field cache, it means that the indexed terms for the field are
+loaded into memory and provided. When you use source(), it will load the source and parse it, when you use
+fields(), it will load a stored field . Loading from the index (either specifically stored fields or source)
+is slow, its recommended you use the doc part.
+http://elasticsearch-users.115913.n3.nabble.com/doc-source-and-quot-stored-quot-property-td4018466.html
+
+
+Users often disable the _source field without thinking about the consequences, and then live to regret it.
+If the _source field isn’t available then a number of features are not supported:
+The update API.
+On the fly highlighting.
+The ability to reindex from one Elasticsearch index to another, either to change mappings or analysis,
+or to upgrade an index to a new major version.
+The ability to debug queries or aggregations by viewing the original document used at index time.
+Potentially in the future, the ability to repair index corruption automatically.
+
+Removing fields from the _source has similar downsides to disabling _source, especially the fact that
+you cannot reindex documents from one Elasticsearch index to another.
+https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-source-field.html
+
+
+Allows to control how the _source field is returned with every hit
+{
+    "_source": false,
+    "query" : {
+        "term" : { "user" : "kimchy" }
+    }
+}
+{
+    "_source": "obj.*",
+    "query" : {
+        "term" : { "user" : "kimchy" }
+    }
+}
+https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-source-filtering.html
+
+Elasticsearch is not just about full-text search, and many users are actually not using Elasticsearch for
+full-text search at all but for analytics though facets. This approach works well, but, as you probably know,
+faceting or sorting on a field requires loading field values into in-memory data structures that we call field data.
+It is very common that field data takes several (tens of) gigabytes of memory. Memory is rather cheap,
+so it is usually not a problem to get boxes with enough memory. However, this can raise issues at the JVM level:
+major garbage collections on a heap of several tens of gigabytes can easily take several seconds during which
+your application will be unresponsive. Careful JVM tuning can help prevent this issue, but ideally field data
+should be stored off-heap.
+
+https://www.elastic.co/blog/disk-based-field-data-a-k-a-doc-values
+
+https://github.com/elastic/elasticsearch/issues/11116
+
+
+
+The JVM heap size is practically limited to 32GB - above this and the JVM can no longer use compressed pointers (resulting in more memory usage for the same data), and garbage collections become slower.
+
+By far the biggest user of the heap for most users is in-memory fielddata, used for sorting, aggregations and scripts. In-memory fielddata is slow to load, as it has to read the whole inverted index and uninvert it. If the fielddata cache fills up, old data is evicted causing heap churn and bad performance (as fielddata is reloaded and evicted again.)
+
+Doc values provide the same function as in-memory fielddata, but the datastructure is written to disk at index time. This results in more disk usage and somewhat slower indexing and mergging (because there is more I/O). Aggregations and sorting are about 20% slower than they are with in-memory fielddata.
+
+The advantages are:
+
+less heap usage and faster garbage collections
+no longer limited by the amount of fielddata that can fit into 32GB of heap - instead the file system caches can make use of all the available RAM
+fewer latency spikes caused by reloading a large segment into memory
+https://github.com/elastic/elasticsearch/issues/8312
