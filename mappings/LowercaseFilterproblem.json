@@ -1,0 +1,52 @@
+{
+  "settings":{
+     "index":{
+        "analysis":{
+           "analyzer":{
+              "analyzer_keyword":{
+                 "type" : "custom",
+                 "tokenizer":"keyword",
+                 "filter":"lowercase"
+              }
+           }
+        }
+     }
+  },
+  "mappings" : {
+      "iron_def_guidelines": {
+      "date_detection":"False",
+      "dynamic_templates": [
+        {
+            "string_fields": {
+            "type" : "string",
+            "mapping": {
+              "analyzer" : "standard",
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "analyzer" : "analyzer_keyword",
+                  "ignore_above": 256,
+                  "type": "string"
+                },
+                "raw_previous": {
+                  "index" : "not_analyzed",
+                  "ignore_above": 256,
+                  "type": "string"
+                }
+              }
+            },
+            "match_mapping_type": "string",
+            "match": "*"
+          }
+        }
+      ],
+    "properties":
+        {
+            "score":
+              {
+                "type":"long"
+              }
+        }
+      }
+    }
+}

@@ -1,0 +1,74 @@
+{
+  "settings":{
+     "index":{
+        "analysis":{
+           "analyzer":{
+              "analyzer_keyword":{
+                 "type" : "custom",
+                 "tokenizer":"keyword",
+                 "filter": ["lowercase", "my_stemmer"]
+              },
+              "analyzer_standard" : {
+                "type" : "custom",
+                "tokenizer":"standard",
+                "filter": ["lowercase", "my_stemmer"]
+              }
+            },
+            "filter" : {
+                "my_stemmer" : {
+                    "type" : "stemmer",
+                    "name" : "english"
+                }
+            }
+        }
+     }
+  },
+    "mappings": {
+       "sample_data": {
+       "date_detection":"False",
+           "dynamic_templates" : [
+              {
+                  "object_fields" : {
+                      "match_mapping_type" : "object",
+                      "mapping" : {
+                          "type" : "object",
+                          "dynamic": "true",
+                          "enabled" : "true",
+                          "include_in_all" : "true"
+                      }
+                  }
+              },
+              {
+                  "string_fields" : {
+                      "match_mapping_type" : "string",
+                      "unmatch" : "Note",
+                      "mapping" : {
+                          "fields":{
+                            "raw":{
+                              "type" : "string",
+                              "analyzer": "analyzer_keyword",
+                              "ignore_above": "256"
+                            },
+                            "exact":{
+                              "type" : "string",
+                              "index" : "not_analyzed",
+                              "ignore_above": "256"
+                            }
+                          },
+                          "type" : "string",
+                          "analyzer" : "analyzer_standard"
+                      }
+                  }
+              }
+          ],
+          "properties":
+              {
+                  "Note":
+                    {
+                      "type":"string",
+                      "analyzer" : "analyzer_standard"
+                    }
+              }
+       }
+    }
+}
