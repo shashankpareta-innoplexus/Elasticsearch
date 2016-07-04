@@ -1,0 +1,12 @@
+/**********  Problem  ***************/
+
+In kols_endo_author_list named database given by Pradumna, match_phrase_prefix was not giving
+desired results for autocomplete on name field.
+
+
+/********** Solution  **************/
+
+A custom analyzer with edgeNGram tokenizer, shingle and lowercase filter was formed and used it in mapping.
+Data was reindexed and then we simply used match query to get desired results.
+
+Mapping is named name_autocomplete.json and it is in mappings folder.

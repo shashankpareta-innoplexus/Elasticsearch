@@ -1,0 +1,18 @@
+/**********   Problem  ************/
+
+In case of .raw query, if there is case (lowercase and uppercase) difference
+between  stored data and queried data, then it will not match i.e. it becomes
+case sensitive. This was a problem faced by Pradumna.
+
+
+/*********  Solution  **********/
+
+I made a modification in mapping of .raw field. The problem was .raw field was not
+analyzed so it will not even takes standard analyzer which has lowercase tokenizer.
+So, query on .raw field fails even for lowercase or uppercase.
+Proposed solution is replace index=not_analyzed with a custom analyzer with keyword tokenizer
+and lowercase filter. Keyword tokenizer does not break tokens like standard rather it takes
+entire field as one token but converts that into lowercase. Now, we can use same queries as
+before on.raw field and it should work.
+
+Mapping is given in LowercaseFilterproblem.json in mappings folder

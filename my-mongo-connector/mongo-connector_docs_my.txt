@@ -1,0 +1,12 @@
+Installation steps:
+
+1. pip install mongo-connector
+
+2. now create a replica set in mongoDB. Here you may face a problem.
+So write this in mongo client window:
+rs.initiate({_id:"yourReplSetName", members: [{"_id":1, "host":"yourHost:yourPort"}]}),
+where yourhost is localhost and port is 27017 if you are running on local machine
+
+3. Create a database in mongodb that you want to synnc with elasticsearch.
+
+4. 

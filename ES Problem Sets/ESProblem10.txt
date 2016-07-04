@@ -1,0 +1,11 @@
+/**************   Problem  *********/
+
+Update bulk on ES index with python script.
+
+
+/***********  Solution  **********/
+
+This can be done by using helpers API in python. It supports bulk operations.
+Code is written in ESBulkUpdate.py
+
+http://elasticsearch-py.readthedocs.io/en/master/helpers.html

@@ -1,0 +1,21 @@
+{
+  "settings":{
+  "analysis":{
+    "analyzer":{
+      "analyzer1_nGram":{
+          "type": "custom",
+          "tokenizer" : "tokenizer1_nGram",
+          "filter": ["lowercase"]
+      }
+    },
+      "tokenizer":{
+        "tokenizer1_nGram":{
+          "type":"nGram",
+          "min_gram":"1",
+          "max_gram":"10",
+          "token_chars":["letter", "digit"]
+        }
+      }
+    }
+  }
+}

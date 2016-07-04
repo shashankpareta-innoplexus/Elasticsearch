@@ -11,8 +11,8 @@
         "tokenizer":{
           "tokenizer1_nGram":{
             "type":"nGram",
-            "min_gram":"2",
-            "max_gram":"5",
+            "min_gram":"1",
+            "max_gram":"10",
             "token_chars":["letter", "digit"]
           }
         },

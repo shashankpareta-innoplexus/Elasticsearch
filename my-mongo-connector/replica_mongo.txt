@@ -1,0 +1,4 @@
+rs.initiate({_id:"yourReplSetName", members: [{"_id":1, "host":"yourHost:yourPort"}]})
+
+for syncing :
+mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager -n db_name.syncthis

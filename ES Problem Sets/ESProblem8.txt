@@ -1,0 +1,17 @@
+/***************  Problem *********/
+
+There was a problem given by Pradumna that
+ Pradumna P
+ Pradumna Panditrao
+ P Panditrao
+
+and case insensitive.
+All should point to the same document.
+
+
+/**************  Solution  ***********/
+
+A custom analyzer with nGram tokenizer, shingle and lowercase filter was formed and used it in mapping.
+Data was reindexed and then we simply used match query to get desired results.
+
+Mapping is named point_to_same_document.json and it is in mappings folder.
