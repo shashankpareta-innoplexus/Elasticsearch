@@ -1,6 +1,6 @@
 /******* Problem **********/
 
-Apply multifield aggregation
+Apply multifield aggregation or aggregation on more than one field simultaneously.
 
 
 /****** Solution *********/

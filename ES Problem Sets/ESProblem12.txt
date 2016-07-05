@@ -1,0 +1,38 @@
+/************  Problem   ***********/
+Date wise sorting of documents and not on score
+
+
+/************  Solution  *********/
+
+Follow this in mapping:
+ "date_detection":"true",
+"dynamic_date_formats" : ["dd/MM/yyyy", "yyyy/MM/dd"],
+And dynamic template like this:
+{
+                  "date_fields" : {
+                      "match_mapping_type" : "date",
+                      "mapping" : {
+                          "store" : "true",
+                          "format" : "yyyy/MM/dd || dd/MM/yyyy",
+                          "type" : "date"
+                      }
+                  }
+  }
+
+Then query like this :
+GET index_name/type_name/_search
+{
+    "query": {
+        "match_all": {}
+    },
+    "sort": [
+       {
+          "term_date": {
+             "order": "asc"
+          },
+          "_score" : {
+            "order":"desc"
+          }
+       }
+    ]
+}

@@ -5,7 +5,7 @@ Dumping data from mongoDB to Elasticsearch in bulk rather than one by one.
 
 /***********  Solution  **********/
 
-This can be done by using Elasticsearch mongoclient i.e. pymongo and helpers API in python.
+This is be done by using Elasticsearch mongoclient i.e. pymongo and helpers API in python.
 It supports bulk indexing.
 Code is written in mongoPythonES2.py
 
