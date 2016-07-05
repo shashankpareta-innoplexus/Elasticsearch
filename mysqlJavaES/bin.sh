@@ -1,15 +1,15 @@
-bin=/home/shashank.pareta/Documents/MyElasticSearch/Learning/elasticsearch-jdbc-2.3.3.0/bin
-lib=/home/shashank.pareta/Documents/MyElasticSearch/Learning/elasticsearch-jdbc-2.3.3.0/lib
+bin=$JDBC_IMPORTER_HOME/bin
+lib=$JDBC_IMPORTER_HOME/lib
 echo $bin
 echo $lib
 echo '{
 "type" : "jdbc",
 "jdbc" : {
 "driver": "com.mysql.jdbc.Driver",
-"url" : "jdbc:mysql://localhost:3306/database_test",
+"url" : "jdbc:mysql://192.168.0.154/database_test",
 "user" : "root",
 "password" : "shashank1107",
-"sql" : "select , id as _id from mytable;",
+"sql" : "select , id as _id from mytable",
 "index" : "jdbc",
 "type" : "mytype",
 "sql.write" : "true",
@@ -17,8 +17,13 @@ echo '{
 "interval":"5",
 "bulk_size": 100,
 "max_bulk_requests": 30,
-"bulk_timeout": "10s",
-"flush_interval":"5s"
+"bulk_timeout": "20s",
+"flush_interval":"5s",
+"elasticsearch" : {
+             "cluster" : "shashank-cluster1",
+             "host" : "192.168.0.154",
+             "port" : 9200
+        }
 }
 }' | java \
 -cp "${lib}/*" \

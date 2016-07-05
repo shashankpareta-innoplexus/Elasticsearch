@@ -1,0 +1,37 @@
+/****************  Problem  **********/
+
+Sorting of results in terms aggregation on the basis of _score and not on doc_count
+
+
+/****************  Solution  ***********/
+
+GET index_name/type_name/_search
+{
+   "query": { ... },
+
+   "aggs": {
+      "agg_name1": {
+         "terms": {
+            "field": "fieldname",
+            "order": {
+               "agg_name2": "desc"
+            }
+         },
+         "aggs": {
+            "agg_name2": {
+               "max": {
+                   "script":{
+                   "lang" : "groovy",
+                   "script_file": "mygroovy"
+                  }
+               }
+            }
+         }
+      }
+   }
+}
+
+Here groovy file is in scripts folder of elasticsearch.
+
+In ../elasticsearch/config/scripts/mygroovy.groovy, write
+_score
