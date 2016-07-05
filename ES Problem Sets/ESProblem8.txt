@@ -1,17 +1,42 @@
 /***************  Problem *********/
 
-There was a problem given by Pradumna that
+There was a problem given by Pradumna that there are three documents with these name:
  Pradumna P
  Pradumna Panditrao
  P Panditrao
 
 and case insensitive.
-All should point to the same document.
+All should point to the same document i.e. Pradumna Panditrao.
 
 
 /**************  Solution  ***********/
 
-A custom analyzer with nGram tokenizer, shingle and lowercase filter was formed and used it in mapping.
-Data was reindexed and then we simply used match query to get desired results.
+A custom analyzer with edgeNGram tokenizer, shingle and lowercase filter was formed and used it in mapping.
+Data was reindexed and then used below queries:
 
-Mapping is named point_to_same_document.json and it is in mappings folder.
+GET author_list1/endo_author_list/_search
+{
+    "size": 0,
+   "_source": [
+      "name"
+   ],
+   "query": {
+      "fuzzy": {
+         "name.autocomplete": "s raut"
+      }
+   },
+   "aggs": {
+      "correct_name_aggs": {
+         "terms": {
+            "field": "name.raw",
+            "order" : { "_term" : "desc" },
+            "size" : 1
+         }
+      }
+   }
+}
+
+However, it worked in my case. I need to see for other required cases too. I need to get into details
+of how fuzzy query works to find out upto what level this solution works.
+
+Mapping is named autocomplete.json and it is in mappings folder.

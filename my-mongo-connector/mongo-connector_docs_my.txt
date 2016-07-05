@@ -1,4 +1,4 @@
-Installation steps:
+Installation and Getting started steps:
 
 1. pip install mongo-connector
 
@@ -7,6 +7,23 @@ So write this in mongo client window:
 rs.initiate({_id:"yourReplSetName", members: [{"_id":1, "host":"yourHost:yourPort"}]}),
 where yourhost is localhost and port is 27017 if you are running on local machine
 
-3. Create a database in mongodb that you want to synnc with elasticsearch.
+3. Create a database in mongodb that you want to sync with elasticsearch.
 
-4. 
+4. Mongo-connector replicates to ElastiSearch using Elastic doc manager. Before mongo-connector
+version < 2.3, the elastic doc manager was packaged as a part of mongo-connector. But for
+version > 2.3, doc managers for 1.x and 2.x are available as plugins.
+Follow this link for doc manager. 1.x (https://github.com/mongodb-labs/elastic-doc-manager) and
+2.x (https://github.com/mongodb-labs/elastic2-doc-manager).
+
+5. Now run this in another terminal:
+  mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager -n db_name.collection_name
+
+6. You will see that mongoDB and elasticsearch are synced.
+
+
+Issues:
+1. In mongo-connector, every time we change index or mongoDB that we want to sync,
+we need to remove oplog.timestamp file. However, sometimess it wasn't working even after
+removing oplog.timestamp file.
+
+2. Data indexing using monngo-connector was not working with dynamic mapping defined.

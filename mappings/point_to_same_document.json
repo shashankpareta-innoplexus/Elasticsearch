@@ -5,7 +5,7 @@
         "autocomplete":{
             "type": "custom",
             "tokenizer" : "tokenizer1_nGram",
-            "filter": ["filter1_lowercase", "filter2_shingles"]
+            "filter": ["lowercase", "filter2_shingles"]
         }
       },
         "tokenizer":{
@@ -17,9 +17,6 @@
           }
         },
         "filter":{
-          "filter1_lowercase":{
-            "type": "lowercase"
-          },
           "filter2_shingles":{
             "type":"shingle",
             "min_shingle_size":"2",
@@ -66,7 +63,8 @@
                   "analyzer": "autocomplete",
                   "search_analyzer": "standard"
                }
-            }
+            },
+            "analyzer": "standard"
          }
 
       }

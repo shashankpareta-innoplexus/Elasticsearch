@@ -27,7 +27,7 @@ GET index_name/type_name/_search
     },
     "sort": [
        {
-          "term_date": {
+          "date_field_name": {
              "order": "asc"
           },
           "_score" : {
