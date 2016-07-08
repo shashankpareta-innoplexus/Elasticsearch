@@ -1,0 +1,88 @@
+{
+   "settings": {
+      "analysis": {
+         "analyzer": {
+            "autocomplete": {
+               "type": "custom",
+               "tokenizer": "tokenizer1_edgeNgram",
+               "filter": [
+                  "lowercase",
+                  "filter_shingles"
+               ]
+            },
+            "analyzer_keyword":{
+               "type" : "custom",
+               "tokenizer":"keyword",
+               "filter":"lowercase"
+            }
+         },
+         "tokenizer": {
+            "tokenizer1_edgeNgram": {
+               "type": "edgeNGram",
+               "min_gram": "1",
+               "max_gram": "10",
+               "token_chars": [
+                  "letter",
+                  "digit"
+               ]
+            }
+         },
+         "filter": {
+            "filter_shingles": {
+               "type": "shingle",
+               "min_shingle_size": "2",
+               "max_shingle_size": "3",
+               "token_separator": " ",
+               "output_unigrams": "true"
+            }
+         }
+      }
+   },
+   "mappings": {
+      "endo_author_list": {
+         "date_detection": "False",
+         "dynamic_templates": [
+            {
+               "string_fields": {
+                  "mapping": {
+                     "type": "string",
+                     "fields": {
+                        "raw": {
+                           "index": "not_analyzed",
+                           "ignore_above": 256,
+                           "type": "string"
+                        }
+                     }
+                  },
+                  "match_mapping_type": "string",
+                  "match": "*",
+                  "unmatch": "name"
+               }
+            }
+         ],
+         "properties": {
+            "name": {
+               "type": "string",
+               "fields": {
+                  "raw": {
+                     "index": "not_analyzed",
+                     "ignore_above": 256,
+                     "type": "string"
+                  },
+                  "exact": {
+                    "analyzer" : "analyzer_keyword",
+                    "ignore_above": 256,
+                    "type": "string"
+                  },
+                  "autocomplete": {
+                     "type": "string",
+                     "analyzer": "autocomplete",
+                     "search_analyzer": "standard"
+                  }
+               },
+               "analyzer": "standard"
+            }
+         }
+      }
+   }
+}

@@ -21,7 +21,7 @@ POST index_name/type_name/_update_by_query
   }
 }
 
-In ../elasticsearch/config/scripts/file_name.groovy, write
+In .. etc/elasticsearch/scripts/file_name.groovy, write
 ctx._source.fieldname = parameter_name
 
 

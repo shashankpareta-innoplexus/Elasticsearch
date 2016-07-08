@@ -1,0 +1,19 @@
+{
+            "_index": "kols_onco_author_list",
+            "_type": "onco_author_list",
+            "_id": "AVU0HkgELdO9h0CZjZis",
+            "_score": 1,
+            "_source": {
+               "name": "Joanna Wang",
+               "alias": [
+                  "Joanna Wang"
+               ],
+               "country": "United States Of America",
+               "affiliation": "Department of Neurosurgery, Johns Hopkins University School of Medicine, Baltimore, MD, USA.",
+               "score": 1,
+               "source": [
+                  "publications"
+               ],
+               "photo_link_v2": ""
+            }
+         }

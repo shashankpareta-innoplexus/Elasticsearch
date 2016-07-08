@@ -6,49 +6,60 @@ import elasticsearch
 import collections
 
 # elasticsearch client
-es = elasticsearch.Elasticsearch()
+es = elasticsearch.Elasticsearch([{'host': '192.168.0.106', 'port': 9200}])
 
 # connection to mongoDB
-connection = MongoClient('localhost',27017)
+connection = MongoClient('192.168.0.58',10080)
 
-# getting collection from database
-db = connection.touchpoint_data.sample_data
+# getting collection
+db = connection.pubmed.pubmed_data_total_simplified
 
-# getting all object Ids of mongo and converting them to string, then storing them in array
 objectId = []
-j=0
-# getting all documents of db in a
+j= 1
 a = db.find()
 for j in range(db.count()):
     A = a.next()
     x = str(A['_id'])
+    if(j>100000):
+        print j, 'break'
+        break
     objectId.append(x)
     j=j+1
 
-# getting all documents from db in b leaving '_id' field
+
+#print 'Fetched object ids'
 b = db.find({},{'_id':0})
 
-i=0
-# this contain list of actions i.e. indexing to be performed on all documents and then dumping them into ES.
-# Index name is 'patents_standard' and type is 'sample_patents'
+i=1
+# this contain list of actions i.e. indexing to be performed on all json objects
 actions = []
 for x in objectId:
 # for i in range(db.count()):
     B = b.next()
     action = {
-        "_index" : "touchpoint_data",
-        "_type" : "sample_data",
+        "_index" : "pubmed",
+        "_type" : "pubmed_data_total_simplified",
         "_id" : x,
         "_source": json.dumps(B, default = json_util.default)
         }
+    if(i>100000):
+        print j, 'break'
+        break
     actions.append(action)
-    #break
+    # break
     print i
     i=i+1
 
+action_bulk = []
 # this adds data to elasticsearch using bulk api
-if(len(actions)>0):
-    helpers.bulk(es, actions, chunk_size=50)
+for k in range(100000):
+    action_bulk.append(actions[k])
+    #print action_bulk
+    k= k+1
+    if(k%25000):
+        if(len(actions)>0):
+            helpers.bulk(es, action_bulk, chunk_size=10)
+        action_bulk = []
 
 # if(len(actions)>0):
 #     helpers.parallel_bulk(es, actions, thread_count=4, chunk_size=100, max_chunk_bytes=104857600, raise_on_exception=False)
