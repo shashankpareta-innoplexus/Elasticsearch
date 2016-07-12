@@ -20,46 +20,58 @@ a = db.find()
 for j in range(db.count()):
     A = a.next()
     x = str(A['_id'])
-    if(j>100000):
-        print j, 'break'
+    if(j<552301):
+        j=j+1
+        continue
+    if(j>552310):
+        print j, 'first break'
         break
     objectId.append(x)
     j=j+1
 
+print objectId
 
 #print 'Fetched object ids'
 b = db.find({},{'_id':0})
 
 i=1
+k=1
 # this contain list of actions i.e. indexing to be performed on all json objects
 actions = []
-for x in objectId:
+for i in range(db.count()):
 # for i in range(db.count()):
     B = b.next()
+    if(i<552301):
+        i=i+1
+        continue
     action = {
-        "_index" : "pubmed",
+        "_index" : "pubmed1",
         "_type" : "pubmed_data_total_simplified",
-        "_id" : x,
+        "_id" : objectId[k],
         "_source": json.dumps(B, default = json_util.default)
         }
-    if(i>100000):
-        print j, 'break'
+    k=k+1
+    if(i>552310):
+        print i, 'second break'
         break
     actions.append(action)
     # break
     print i
     i=i+1
 
-action_bulk = []
-# this adds data to elasticsearch using bulk api
-for k in range(100000):
-    action_bulk.append(actions[k])
-    #print action_bulk
-    k= k+1
-    if(k%25000):
-        if(len(actions)>0):
-            helpers.bulk(es, action_bulk, chunk_size=10)
-        action_bulk = []
+if(len(actions)>0):
+    helpers.bulk(es, actions, chunk_size=100, request_timeout=50)
+
+# action_bulk = []
+# # this adds data to elasticsearch using bulk api
+# for k in range(100000):
+#     action_bulk.append(actions[k])
+#     #print action_bulk
+#     k= k+1
+#     if(k%25000):
+#         if(len(actions)>0):
+#             helpers.bulk(es, action_bulk, chunk_size=10)
+#         action_bulk = []
 
 # if(len(actions)>0):
 #     helpers.parallel_bulk(es, actions, thread_count=4, chunk_size=100, max_chunk_bytes=104857600, raise_on_exception=False)

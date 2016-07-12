@@ -30,7 +30,7 @@
     "mappings": {
        "sample_data": {
        "date_detection":"true",
-       "dynamic_date_formats" : ["dd/MM/yyyy", "yyyy/MM/dd"],
+       "dynamic_date_formats" : ["dd/MM/yyyy", "yyyy/MM/dd", "yyyyMMdd'T'HHmmssZ"],
           "dynamic_templates" : [
               {
                   "numeric_fields" : {
@@ -63,7 +63,7 @@
                           "include_in_all" : "true",
                           "index": "not_analyzed",
                           "store" : "true",
-                          "format" : "yyyy/MM/dd || dd/MM/yyyy",
+                          "format" : "yyyy/MM/dd || dd/MM/yyyy || yyyyMMdd'T'HHmmssZ",
                           "type" : "date"
                       }
                   }

@@ -1,0 +1,39 @@
+/*************  Problem  ************/
+
+I wish to get only those documents that has a given phrase. For example,
+I want to get those documents that has "Lung Cancer" together in it. match_phrase query
+fails as it gives those documents also that has lung and cancer but far way and
+not together.
+
+
+/************ Solution 1  ***************/
+
+{
+"query": {
+       "match_phrase": {
+          "abstract": {
+              "query": "unphosphorylated kinase",
+              "slop" : "0"
+          }
+       }
+    }
+}
+
+Now here, I used slop with match_phrase query. Slop is used for proximity searches.
+Slop = 0 means that the gap between two words should not be more than 0.
+
+
+/***********  Solution 2   ****************/
+
+{
+   "query": {
+       "query_string": {
+          "results_abstract.data.abstract": {
+              "query": "\"activity against\""
+          }
+       }
+   }
+}
+
+This is simple Query String query.
+Reference : https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html

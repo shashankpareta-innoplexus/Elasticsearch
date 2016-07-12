@@ -1,0 +1,3 @@
+/************  Problem  ************/
+
+Dynamically adding and removing objects from object array using query

@@ -1,0 +1,28 @@
+/*************   Problem   ****************/
+
+Sorting on date fields with different formats: (dd-MM-yyyy, yyyy-MM-dd, MM-dd-yyyy)
+
+
+/************  Solution  *****************/
+
+Remember one thing in this is MM of format is in capitals. This is how elasticsearch
+identifies month. So, use either of the above formats with case_sensitive while
+indexing.
+
+Then use the following query to find the range of dates:
+
+{
+    "query": {
+        "filtered": {
+           "filter": {
+               "range": {
+                  "date_field": {
+                     "gte": "03-20-2016",
+                     "lte": "04-20-2016",
+                     "format" : "MM-dd-yyyy"
+                  }
+               }
+           }
+        }
+    }
+}

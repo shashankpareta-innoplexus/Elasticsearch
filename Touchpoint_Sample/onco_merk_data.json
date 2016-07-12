@@ -1,3 +1,5 @@
+http://stackoverflow.com/questions/32267275/how-to-merge-the-results-of-two-queries-to-different-indices-in-elasticsearch
+
       {
             "_index": "kols_onco_merck",
             "_type": "onco_merck",

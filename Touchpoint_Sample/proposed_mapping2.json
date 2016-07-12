@@ -64,12 +64,12 @@
             "name": {
                "type": "string",
                "fields": {
-                  "raw": {
+                  "exact": {
                      "index": "not_analyzed",
                      "ignore_above": 256,
                      "type": "string"
                   },
-                  "exact": {
+                  "lowercase": {
                     "analyzer" : "analyzer_keyword",
                     "ignore_above": 256,
                     "type": "string"

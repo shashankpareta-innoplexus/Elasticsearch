@@ -1,0 +1,42 @@
+/***************   Problem   **************/
+
+For matching multiple items from a particular field, terms query is used. Problem is
+it matches exactly to the indexed data i.e. if you entered "shashank" then it will not
+match if in index "Shashank" is stored. Thus, search is case sensitive.
+
+
+/***************   Solution   *************/
+
+Thus to make it case insensitive, match query is used in place of terms query. Let's
+see, how it is possible:
+
+Indexed data: shashank, pareta, sanjay
+
+terms query:
+{
+    "query": {
+        "terms": {
+           "FIELD": [
+              "shashank",
+              "Pareta",
+              "sanjay"
+           ]
+        }
+    }
+}
+
+
+match query:
+{
+    "query": {
+        "match": {
+           "FIELD": {
+               "query": ["shashank", "sanjay", "Pareta"],
+               "operator": "or"
+           }
+        }
+    }
+}
+
+
+here for above case, terms query will fail but match query will work.
