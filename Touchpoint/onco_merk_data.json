@@ -1,0 +1,45 @@
+http://stackoverflow.com/questions/32267275/how-to-merge-the-results-of-two-queries-to-different-indices-in-elasticsearch
+
+      {
+            "_index": "kols_onco_merck",
+            "_type": "onco_merck",
+            "_id": "AVUz6uCwLdO9h0CZjLnL",
+            "_score": 1,
+            "_source": {
+               "indications": [
+                  "Brain Cancer",
+                  "Thyroid Cancer",
+                  "Head and Neck Cancer",
+                  "Breast Cancer",
+                  "Miscellaneous",
+                  "Liver Cancer",
+                  "Bone Cancer",
+                  "Solid Tumor"
+               ],
+               "name": "Alireza Nikoofar",
+               "media_trained": "General",
+               "country": "Iran",
+               "name_final": "Alireza Nikoofar",
+               "photo_link": "",
+               "affiliation": "  Firoozgar Hospital  Iran University of Medical Sciences  Tehran  Iran.",
+               "indications_score": {
+                  "Brain Cancer": 0.07625,
+                  "Thyroid Cancer": 0.07625,
+                  "Head and Neck Cancer": 1.14075,
+                  "Breast Cancer": 1.5828333333333333,
+                  "Miscellaneous": 0,
+                  "Liver Cancer": 1.2075,
+                  "Bone Cancer": 0.07625,
+                  "Solid Tumor": 0.5865
+               },
+               "country_updated": "Iran",
+               "source": [
+                  "publications"
+               ],
+               "old_name": "Alireza Nikoofar",
+               "score": 2,
+               "old_affiliation_version1": "Department of Radiotherapy, Firoozgar Hospital, Iran University of Medical Sciences, Tehran, Iran.",
+               "email": "",
+               "affiliation_updated": "Tehran university of medical sciences (tums)"
+            }
+         }

@@ -1,0 +1,51 @@
+{
+  "settings": {
+     "analysis": {
+        "analyzer": {
+           "analyzer_keyword":{
+              "type" : "custom",
+              "tokenizer":"keyword",
+              "filter":"lowercase"
+           }
+        }
+     }
+  },
+   "mappings": {
+      "sample_data": {
+         "date_detection": "False",
+         "dynamic_templates": [
+            {
+               "object_fields": {
+                  "match": "indication_v1",
+                  "match_pattern" : "regex",
+                  "mapping": {
+                     "type": "nested"
+                  }
+               }
+            },
+            {
+               "string_selected_fields": {
+                 "match": "indication",
+                 "match_pattern" : "regex",
+                  "mapping": {
+                     "type": "string",
+                     "analyzer": "standard",
+                     "fields": {
+                        "case_sensitive": {
+                           "index": "not_analyzed",
+                           "ignore_above": 256,
+                           "type": "string"
+                        },
+                        "case_insensitive": {
+                           "analyzer": "analyzer_keyword",
+                           "ignore_above": 256,
+                           "type": "string"
+                        }
+                     }
+                  }
+               }
+            }
+         ]
+      }
+   }
+}

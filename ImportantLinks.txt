@@ -9,3 +9,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/breaking_20_mapp
 https://blogs.endjin.com/2015/01/elasticsearch-gotchas-and-tips-part-2/
 
 http://elasticsearch-users.115913.n3.nabble.com/p
+
+https://www.elastic.co/blog/key-point-to-be-aware-of-when-upgrading-from-elasticsearch-1-to-2
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-upgrade.html

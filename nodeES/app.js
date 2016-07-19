@@ -1,17 +1,41 @@
 var express = require('express');
-var router = express.Router();
+var timeout = require('connect-timeout');
+var bodyParser = require('body-parser');
 
-var elastic = require('../elasticsearch');
-var documents = require('./routes')
+var demo = require('./routes/controller.js');
 
-router.get('/suggest/:input', function(res, req, next){
-    elastic.getSuggestions(req.params.input)
-});
+// CORS middleware
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, x-access-token');
 
-router.post('/', function(req, res, next){
-    elastic.addDocuments(req.body).then(function(result){
-      res.json(result);
-    })
-});
+  next();
+}
 
-module.exports = router;
+var haltOnTimedout = function(req, res, next) {
+  if (!req.timedout){
+    next();
+  }
+}
+
+var app = express();
+
+app.use(timeout('100s'));
+app.use(haltOnTimedout);
+app.use(allowCrossDomain);
+app.use(haltOnTimedout);
+app.use(bodyParser.json());
+app.use(haltOnTimedout);
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(haltOnTimedout);
+app.use('/myapp', demo);
+app.use(haltOnTimedout);
+
+// app.use(function(err, req, res, next){
+//   err.status = 400
+// })
+
+module.exports = app;
