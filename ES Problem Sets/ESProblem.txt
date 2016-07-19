@@ -1,0 +1,6 @@
+{
+               "query_string": {
+                  "default_field": "target_tag",
+                  "query": "(BETA-GLUCAN SYNTHASE INHIBITOR) OR (CYTOTOXIC)"
+               }
+            }

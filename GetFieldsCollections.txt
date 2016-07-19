@@ -1,7 +1,7 @@
 #In mongo CLI, get list of all fields of a collection  -
 
 mr = db.runCommand({
-  "mapreduce" : "sample_data",
+  "mapreduce" : "sample_patents",
   "map" : function() {
     for (var key in this) { emit(key, null); }
   },

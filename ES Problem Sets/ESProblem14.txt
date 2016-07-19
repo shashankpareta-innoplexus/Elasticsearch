@@ -35,5 +35,6 @@ Slop = 0 means that the gap between two words should not be more than 0.
    }
 }
 
+There is some problem  with this solution. It does not always give desired results.
 This is simple Query String query.
 Reference : https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html

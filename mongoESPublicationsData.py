@@ -23,7 +23,7 @@ for j in range(db.count()):
     if(j<552301):
         j=j+1
         continue
-    if(j>552310):
+    if(j>1000000):
         print j, 'first break'
         break
     objectId.append(x)
@@ -51,7 +51,7 @@ for i in range(db.count()):
         "_source": json.dumps(B, default = json_util.default)
         }
     k=k+1
-    if(i>552310):
+    if(i>1000000):
         print i, 'second break'
         break
     actions.append(action)

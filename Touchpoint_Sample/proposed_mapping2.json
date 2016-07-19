@@ -10,17 +10,17 @@
                   "filter_shingles"
                ]
             },
-            "analyzer_keyword":{
-               "type" : "custom",
-               "tokenizer":"keyword",
-               "filter":"lowercase"
+            "analyzer_keyword": {
+               "type": "custom",
+               "tokenizer": "keyword",
+               "filter": "lowercase"
             }
          },
          "tokenizer": {
             "tokenizer1_edgeNgram": {
                "type": "edgeNGram",
                "min_gram": "1",
-               "max_gram": "10",
+               "max_gram": "5",
                "token_chars": [
                   "letter",
                   "digit"
@@ -39,50 +39,53 @@
       }
    },
    "mappings": {
-      "endo_author_list": {
+      "sample_data": {
          "date_detection": "False",
          "dynamic_templates": [
+            {
+               "string_selected_fields": {
+                  "match": "name",
+                  "match_pattern": "regex",
+                  "match_mapping_type": "string",
+                  "mapping": {
+                     "type": "string",
+                     "fields": {
+                        "case_sensitive": {
+                           "index": "not_analyzed",
+                           "ignore_above": 256,
+                           "type": "string"
+                        },
+                        "case_insensitive": {
+                           "analyzer": "analyzer_keyword",
+                           "ignore_above": 256,
+                           "type": "string"
+                        },
+                        "autocomplete": {
+                           "type": "string",
+                           "analyzer": "autocomplete",
+                           "search_analyzer": "standard"
+                        }
+                     },
+                     "analyzer": "standard"
+                  }
+               }
+            },
             {
                "string_fields": {
                   "mapping": {
                      "type": "string",
                      "fields": {
-                        "raw": {
+                        "case_sensitive": {
                            "index": "not_analyzed",
                            "ignore_above": 256,
                            "type": "string"
                         }
                      }
                   },
-                  "match_mapping_type": "string",
-                  "match": "*",
-                  "unmatch": "name"
+                  "match_mapping_type": "string"
                }
             }
-         ],
-         "properties": {
-            "name": {
-               "type": "string",
-               "fields": {
-                  "exact": {
-                     "index": "not_analyzed",
-                     "ignore_above": 256,
-                     "type": "string"
-                  },
-                  "lowercase": {
-                    "analyzer" : "analyzer_keyword",
-                    "ignore_above": 256,
-                    "type": "string"
-                  },
-                  "autocomplete": {
-                     "type": "string",
-                     "analyzer": "autocomplete",
-                     "search_analyzer": "standard"
-                  }
-               },
-               "analyzer": "standard"
-            }
-         }
+         ]
       }
    }
 }

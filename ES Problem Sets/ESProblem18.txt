@@ -1,0 +1,42 @@
+/*************   Problem  ***************/
+
+Getting fields after aggregations and not the aggregated field only
+
+/************   Solution1  ***************/
+
+GET authors_data/sample_data/_search
+{
+   "size": 0,
+   "aggs": {
+      "agg1": {
+         "terms": {
+            "field": "name.case_sensitive"
+         },
+         "aggs": {
+            "agg2": {
+               "terms": {
+                  "script": {
+                     "lang": "groovy",
+                     "script_file": "sample_groovy"
+                  }
+               }
+            }
+         }
+      }
+   }
+}
+
+Then in scripts folder of elasticsearch config file add .groovy file..
+i.e. sample_groovy.groovy and in it put this content:
+
+[doc['field_name1.case_sensitive'].value,doc['field_name2.case_sensitive'].value]
+
+
+This will first find the unique name of a field and then return other fields of that document
+
+
+
+/************   Solution2  ***************/
+
+https://github.com/elastic/elasticsearch/issues/4915
+another way of getting source: byronvoorbach's answer

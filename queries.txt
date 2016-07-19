@@ -1,0 +1,16 @@
+kols_onco_patents_v1/onco_patents_v1
+
+nested:
+inventors,tag_v1
+
+case insensitive:
+target_tag,intervention_tag,indication,master_country
+
+
+kols_publications/publications_top_country_v1
+
+nested:
+authors, tag_v1
+
+case insensitive:
+target_tag,intervention_tag,indication,master_country,journal_title,oncology_sub_indication

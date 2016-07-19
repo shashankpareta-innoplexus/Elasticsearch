@@ -1,0 +1,11 @@
+http://stackoverflow.com/questions/32267275/how-to-merge-the-results-of-two-queries-to-different-indices-in-elasticsearch
+
+https://www.elastic.co/blog/found-crash-elasticsearch
+
+https://www.elastic.co/blog/performance-considerations-elasticsearch-indexing
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/breaking_20_mapping_changes.html
+
+https://blogs.endjin.com/2015/01/elasticsearch-gotchas-and-tips-part-2/
+
+http://elasticsearch-users.115913.n3.nabble.com/p

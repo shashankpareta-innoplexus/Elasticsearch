@@ -1,0 +1,43 @@
+/***************  Problem  ****************/
+
+Query multiple indices with boost at query time for one indices which matches that condition.
+
+
+/***************  Solution  ***************/
+
+Get index1,index2/type1,type2/_search
+{
+    "query": {
+      "bool": {
+         "should": [
+            {
+               "bool": {
+                  "must": [
+                     {
+                        "exists": {
+                           "field": "media_trained"
+                        }
+                     },
+                     {
+                           "match": {
+                              "name.autocomplete": {
+                                 "query": "Vincent Chung",
+                                 "boost": "2"
+                              }
+                           }
+
+                     }
+                  ]
+               }
+            },
+            {
+                "match": {
+                   "name.autocomplete": "Vincent Chung"
+                }
+            }
+         ]
+      }
+   }
+}
+
+This query will boost the results of index which has media_trained field in it.
