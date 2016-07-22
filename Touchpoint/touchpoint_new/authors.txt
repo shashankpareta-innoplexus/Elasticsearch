@@ -1,0 +1,7 @@
+
+Author names in four asset classes:
+
+publications: authors.author_name
+congresses: author_scores.name
+patents: inventors.name
+clinical_trials: investigators.last_name

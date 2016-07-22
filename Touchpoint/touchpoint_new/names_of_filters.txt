@@ -1,0 +1,9 @@
+Field names:
+
+Congresses--
+In mongo: congress_category, target_tag, neurology_indication, tag_v1, intervention_tag, author_scores, title,
+congress_catagory, congress_name, created_at, congress_type, intervention_search_tag, symptoms,
+oncology_sublindication
+
+In ES: congress_category, target_tag, neurology_indication, tag_v1, intervention_tag,
+authors

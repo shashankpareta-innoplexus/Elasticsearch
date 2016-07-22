@@ -39,7 +39,7 @@
       }
    },
    "mappings": {
-      "sample_data": {
+      "congresses_new": {
          "date_detection": "False",
          "dynamic_templates": [
              {
@@ -52,7 +52,7 @@
                 }
              },
               {
-                 "string_selected_fields": {
+                 "autocomplete_fields": {
                     "match": "name",
                     "match_pattern": "regex",
                     "match_mapping_type": "string",
@@ -76,6 +76,32 @@
                              "type": "string",
                              "analyzer": "autocomplete",
                              "search_analyzer": "standard"
+                          }
+                       },
+                       "analyzer": "standard"
+                    }
+                 }
+              },
+              {
+                 "string_selected_fields": {
+                    "match": "country|target_tag|indication|category|intervention_tag",
+                    "match_pattern": "regex",
+                    "match_mapping_type": "string",
+                    "mapping": {
+                       "type": "string",
+                       "fields": {
+                          "case_sensitive": {
+                             "index": "not_analyzed",
+                             "ignore_above": 256,
+                             "type": "string",
+                             "store": true
+                          },
+                          "case_insensitive": {
+                             "analyzer": "analyzer_keyword",
+                             "ignore_above": 256,
+                             "type": "string",
+                             "search_analyzer":"standard",
+                             "store": true
                           }
                        },
                        "analyzer": "standard"
