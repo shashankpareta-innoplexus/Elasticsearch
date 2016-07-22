@@ -1,0 +1,13 @@
+Filters that are not in Publications:
+
+1. indication:
+Clinical trials unique filters = 4 new filter
+congresses unique filters = 0 new filter
+
+2. moas
+Clinical trials unique filters = 360 new filter
+congresses unique filters = 384 new filter
+
+3. interventions
+Clinical trials unique filters = 2244 new filter
+congresses unique filters = 5615 new filter

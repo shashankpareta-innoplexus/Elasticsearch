@@ -1,0 +1,17 @@
+/************ Problem ****************/
+
+Get only source and no meta data in response
+
+/*********** Solution ***************/
+GET alias1/crm_comments/_search?filter_path=took,hits.hits._id,hits.hits._source
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+https://www.elastic.co/guide/en/elasticsearch/reference/2.3/common-options.html
+
+https://github.com/elastic/elasticsearch/issues/2149
+
+http://stackoverflow.com/questions/23283033/filter-out-metadata-fields-and-only-return-source-fields-in-elasticsearch

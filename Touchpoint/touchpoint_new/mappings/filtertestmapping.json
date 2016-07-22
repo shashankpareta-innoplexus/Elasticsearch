@@ -1,3 +1,7 @@
+#Author : Shashank pareta
+#Description: This mapping defines autocomplete and case insensitiveness for filters data.
+#Used in : kols_filters index
+
 {
    "settings": {
       "analysis": {
@@ -20,7 +24,7 @@
             "tokenizer1_edgeNgram": {
                "type": "edgeNGram",
                "min_gram": "1",
-               "max_gram": "5",
+               "max_gram": "10",
                "token_chars": [
                   "letter",
                   "digit"
@@ -39,22 +43,11 @@
       }
    },
    "mappings": {
-      "sample_data": {
+      "onco_filter_data_1": {
          "date_detection": "False",
          "dynamic_templates": [
             {
-                "object_fields": {
-                   "match": "authors|tag_v1",
-                   "match_pattern" : "regex",
-                   "mapping": {
-                      "type": "nested"
-                   }
-                }
-            },
-            {
-               "string_selected_fields": {
-                  "match": "name",
-                  "match_pattern": "regex",
+               "string_fields": {
                   "match_mapping_type": "string",
                   "mapping": {
                      "type": "string",
@@ -80,22 +73,6 @@
                      },
                      "analyzer": "standard"
                   }
-               }
-            },
-            {
-               "string_fields": {
-                  "mapping": {
-                     "type": "string",
-                     "fields": {
-                        "case_sensitive": {
-                           "index": "not_analyzed",
-                           "ignore_above": 256,
-                           "type": "string",
-                           "doc_values": false
-                        }
-                     }
-                  },
-                  "match_mapping_type": "string"
                }
             }
          ]

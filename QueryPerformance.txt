@@ -1,0 +1,21 @@
+Suggestions for improving ES performance
+
+1. Get only those source which are required. Reduce network bandwidth.
+2. Use aliases instead of index for querying
+3. Avoid excessively large mapping as this can add significant overhead while performing searches,
+   consumes lot of memory (Mapping explosion).
+4. Use not_analyzed to avoid tokenization.
+5. Use doc_values per property basis i.e. disable doc_values for those fields where aggregation is
+   not performed. Not applicable for analyzed fields.
+6. Enable shard request caching by using:
+    PUT /index_name/_settings
+    {
+      "index.requests.enable" : true
+    }
+7. Use replicas but too much replica also adds a overhead.
+8. Never use wildcard queries
+9. In case of multifield use store because that field might be used again and again.
+10. Use filters before query as it matches on yes/no basis and also cache results
+11. Use bool filters.
+12. Avoid aggregations on analyzed fields.
+13. Avoid scripting. These are expensive and not cached.

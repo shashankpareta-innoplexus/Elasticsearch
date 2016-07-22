@@ -1,0 +1,27 @@
+Touchpoint Filters
+
+Five filters that have separate collections:
+1. indication
+2. subindication_tag
+3. interventions
+4. moas
+5. countries
+
+Filters that come from main dataset:
+1. sponsors (CT)  --done
+2. journal_title (Publications) --merged into master_filters
+3. IPC classes (Patents)  (on hold)
+4. patent office (Patents) (64) --merged into master_filters
+5. congresses (congresses) (26) --merged into master_filters
+6. media_training (final_merck)  (check if hard coded)
+7. guideline_name (in guidelines  database) (4) -- merged into master_filters
+8. committee (guidelines)(59)  --merged into master_filters
+9. sub-committee (guidelines) (13) --merged into master_filters
+10. societies (In societies)(104)  --merged into master_filters
+11. category (UI hard coded)
+
+In category filter:
+there are different collections of:
+governing bodies, co-authorship, journal editorial report, high usability
+
+These values are hard coded on UI side but after clicking results come from their respective collections.

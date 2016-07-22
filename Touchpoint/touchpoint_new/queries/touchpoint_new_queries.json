@@ -1,0 +1,95 @@
+#Author : Shashank Pareta
+
+
+Query: For autocomplete of filters
+GET kols_filters/onco_filter_data_1/_search
+{
+    "query": {
+        "match": {
+           "field_name.autocomplete": "Pal"
+        }
+    }
+}
+
+Query: Query on aliases rather than on index. This will reduce downtime to nearly zero
+Case 1: Simple use cases of alias with one index
+add one index --
+POST _aliases
+{
+    "actions": [
+       {
+          "add": {
+             "index": "index1",
+             "alias": "alias1"
+          }
+       }
+    ]
+}
+
+query on alias with index1--
+GET alias1/type_name/_search
+{
+    "query":{}
+}
+
+Replace index1 with new one --
+POST _aliases
+{
+    "actions": [
+       {
+           "remove": {
+             "index": "old_index_name",
+             "alias": "alias1"
+           },
+          "add": {
+             "index": "new_index_name",
+             "alias": "alias1"
+          }
+       }
+    ]
+}
+
+
+Case 2: Make a filtered alias.
+Let's say we have a data of 10lakh documents. It has a country field filter which has four countries:
+Canada, France, Germany and USA. Now, requirement is that we want distinct author names of Canada.
+Then there are two ways to do it:
+First is to first filter on countries in query and then apply aggregation.
+Second is by aliases. What we can do is we can create an alias that points to those documents of
+that index which has canada in their country name. Then in query time we can just query on that alias.
+Now, we will not have to filter countries in query.
+Example:
+
+POST _aliases
+{
+    "actions": [
+       {
+          "add": {
+             "index": ["index1"],
+             "alias": "alias1",
+             "filter": {
+                 "term": {
+                    "country": "canada"
+                 }
+             }
+          }
+       }
+    ]
+}
+
+
+Case 3: Add multiple indices to an alias.
+We can add many indices to an alias and then we can query on that alias. This will
+help me in querying multiple indices at once.
+
+POST _aliases
+{
+    "actions": [
+       {
+          "add": {
+             "index": ["kols_onco_publications","kols_onco_congresses"],
+             "alias": "alias1"
+          }
+       }
+    ]
+}

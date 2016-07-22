@@ -43,15 +43,6 @@
          "date_detection": "False",
          "dynamic_templates": [
             {
-                "object_fields": {
-                   "match": "authors|tag_v1",
-                   "match_pattern" : "regex",
-                   "mapping": {
-                      "type": "nested"
-                   }
-                }
-            },
-            {
                "string_selected_fields": {
                   "match": "name",
                   "match_pattern": "regex",
