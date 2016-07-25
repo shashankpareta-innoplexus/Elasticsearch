@@ -6,3 +6,4 @@ unique values only.
 4. How to access stored fields
 5. Write queries on aliases
 6. Change mapping (as per query performance)
+7. Term suggestor
