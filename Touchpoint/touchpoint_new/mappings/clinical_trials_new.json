@@ -84,7 +84,7 @@
               },
               {
                  "string_selected_fields": {
-                    "match": "country|indication|sponsor|target_tag|intervention_tag",
+                    "match": "master_country|indication|sponsor|target_tag|intervention_tag",
                     "match_pattern": "regex",
                     "match_mapping_type": "string",
                     "mapping": {

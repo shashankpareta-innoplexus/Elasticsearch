@@ -1,0 +1,44 @@
+{
+   "settings": {
+      "analysis": {
+         "analyzer": {
+            "analyzer_keyword": {
+               "type": "custom",
+               "tokenizer": "keyword",
+               "filter": "lowercase"
+            }
+         }
+      }
+   },
+   "mappings": {
+      "onco_master_new": {
+         "date_detection": "False",
+         "dynamic_templates": [
+              {
+                 "string_selected_fields": {
+                    "match_mapping_type": "string",
+                    "mapping": {
+                       "type": "string",
+                       "fields": {
+                          "case_sensitive": {
+                             "index": "not_analyzed",
+                             "ignore_above": 256,
+                             "type": "string",
+                             "store": true
+                          },
+                          "case_insensitive": {
+                             "analyzer": "analyzer_keyword",
+                             "ignore_above": 256,
+                             "type": "string",
+                             "search_analyzer":"standard",
+                             "store": true
+                          }
+                       },
+                       "analyzer": "standard"
+                    }
+                 }
+              }
+         ]
+      }
+   }
+}

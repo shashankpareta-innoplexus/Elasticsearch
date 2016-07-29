@@ -14,7 +14,9 @@ db = client.ct_filter
 es = Elasticsearch(['192.168.0.64:9200'])
 
 
-all_data = db.filters.find({},{"investigators":1,"tag_v1":1,"principal_investigators":1,"phase_v1":1,"sponsors":1,"created_at":1,"cinical_id":1,"public_title":1,"target_tag":1,"intervention_tag":1,"oncology_subindication":1,"intervention_search_tag":1}).batch_size(1000)
+# check fields in clinical trials
+all_data = db.filters.find({},{"investigators":1,"tag_v1":1,"principal_investigators":1,"phase_v1":1,"sponsors":1,"created_at":1,"clinical_id":1,"public_title":1,"target_tag":1,"intervention_tag":1,"intervention_search_tag":1,"oncology_indication":1}).batch_size(1000)
+
 count = 0
 actions = []
 
@@ -45,17 +47,17 @@ for x in all_data:
 
 
         # normalize master_country to name in authors
-        if 'authors' in doc_sanitized.keys():
-            i=0
-            for y in doc_sanitized['authors']:
-                # print x['catagory']
-                if 'country' in y.keys():
-                    del doc_sanitized['authors'][i]['country']
-
-                if 'master_country' in y.keys():
-                    doc_sanitized['authors'][i]['country'] = y['master_country']
-                    del doc_sanitized['authors'][i]['master_country']
-                i=i+1
+        # if 'authors' in doc_sanitized.keys():
+        #     i=0
+        #     for y in doc_sanitized['authors']:
+        #         # print x['catagory']
+        #         if 'country' in y.keys():
+        #             del doc_sanitized['authors'][i]['country']
+        #
+        #         if 'master_country' in y.keys():
+        #             doc_sanitized['authors'][i]['country'] = y['master_country']
+        #             del doc_sanitized['authors'][i]['master_country']
+        #         i=i+1
 
             # print doc_sanitized['authors']
 

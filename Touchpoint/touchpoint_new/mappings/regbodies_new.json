@@ -44,7 +44,7 @@
          "dynamic_templates": [
              {
                 "object_fields": {
-                   "match": "authors|tag_v1",
+                   "match": "tag_v1",
                    "match_pattern" : "regex",
                    "mapping": {
                       "type": "nested"
@@ -84,7 +84,7 @@
               },
               {
                  "string_selected_fields": {
-                    "match": "master_country|target_tag|indication|catagory|intervention_tag",
+                    "match": "master_country|catagory|intervention_tag",
                     "match_pattern": "regex",
                     "match_mapping_type": "string",
                     "mapping": {

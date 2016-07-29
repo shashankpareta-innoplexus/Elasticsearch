@@ -14,7 +14,7 @@ db = client.congresses_filter
 es = Elasticsearch(['192.168.0.64:9200'])
 
 
-all_data = db.filters.find({},{"congress_category":1,"target_tag":1,"tag_v1":1,"intervention_tag":1,"author_scores":1,"title":1,"congress_catagory":1,"congress_name":1,"created_at":1,"congress_type":1,"intervention_search_tag":1,"symptoms":1,"oncology_sub_indication":1}).batch_size(1000)
+all_data = db.filters.find({},{"congress_category":1,"target_tag":1,"tag_v1":1,"intervention_tag":1,"author_scores":1,"title":1,"congress_catagory":1,"congress_name":1,"created_at":1,"congress_type":1,"intervention_search_tag":1,"symptoms":1,"oncology_indication":1}).batch_size(1000)
 count = 0
 actions = []
 
@@ -30,15 +30,15 @@ for x in all_data:
         # print doc_sanitized['oncology_sub_indication'][0]
 
         # normalize category name in tag_v1
-        if 'tag_v1' in doc_sanitized.keys():
-            i=0
-            for y in doc_sanitized['tag_v1']:
-                # print x['catagory']
-                if 'catagory' in y.keys():
-                    doc_sanitized['tag_v1'][i]['category'] = y['catagory']
-                    del doc_sanitized['tag_v1'][i]['catagory']
-                    # print doc_sanitized['tag_v1'][i]['category']
-                i=i+1
+        # if 'tag_v1' in doc_sanitized.keys():
+        #     i=0
+        #     for y in doc_sanitized['tag_v1']:
+        #         # print x['catagory']
+        #         if 'catagory' in y.keys():
+        #             doc_sanitized['tag_v1'][i]['category'] = y['catagory']
+        #             del doc_sanitized['tag_v1'][i]['catagory']
+        #             # print doc_sanitized['tag_v1'][i]['category']
+        #         i=i+1
 
         # normalize author_scores to authors
         if 'author_scores' in doc_sanitized.keys():
@@ -46,16 +46,16 @@ for x in all_data:
             del doc_sanitized['author_scores']
 
         # normalize country name in authors
-        if 'authors' in doc_sanitized.keys():
-            i=0
-            for y in doc_sanitized['authors']:
-                # print y
-                # print type(y['master_country'])
-                if 'master_country' in y.keys():
-                    doc_sanitized['authors'][i]['country'] = y['master_country']
-                    del doc_sanitized['authors'][i]['master_country']
-                    # print y
-                i=i+1
+        # if 'authors' in doc_sanitized.keys():
+        #     i=0
+        #     for y in doc_sanitized['authors']:
+        #         # print y
+        #         # print type(y['master_country'])
+        #         if 'master_country' in y.keys():
+        #             doc_sanitized['authors'][i]['country'] = y['master_country']
+        #             del doc_sanitized['authors'][i]['master_country']
+        #             # print y
+        #         i=i+1
         # ret_val = es.index(index="kols_congresses_new",doc_type="congresses_new",ignore=400,body=doc_sanitized,request_timeout=60)
         action = {
             "_index" : "kols_congresses_new",

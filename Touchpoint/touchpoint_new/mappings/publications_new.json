@@ -39,7 +39,7 @@
       }
    },
    "mappings": {
-      "congresses_new": {
+      "publications_new": {
          "date_detection": "False",
          "dynamic_templates": [
              {
@@ -84,7 +84,7 @@
               },
               {
                  "string_selected_fields": {
-                    "match": "master_country|target_tag|indication|catagory|intervention_tag",
+                    "match": "master_country|indication|target_tag|intervention_tag|journal_title|oncology_subindication",
                     "match_pattern": "regex",
                     "match_mapping_type": "string",
                     "mapping": {

@@ -1,0 +1,4 @@
+Error while doing bower install:
+
+sudo bower install --allow-root
+http://stackoverflow.com/questions/22257726/eacces-error-with-bower-install
