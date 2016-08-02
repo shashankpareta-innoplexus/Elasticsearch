@@ -43,7 +43,7 @@ for x in objectId:
     B = b.next()
     action = {
         "_index" : "kols_filters",
-        "_type" : "onco_filter_data_1",
+        "_type" : "filters",
         "_id" : x,
         "_source": json.dumps(B, default = json_util.default)
         }

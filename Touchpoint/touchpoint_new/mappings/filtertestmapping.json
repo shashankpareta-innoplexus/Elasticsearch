@@ -43,7 +43,7 @@
       }
    },
    "mappings": {
-      "onco_filter_data_1": {
+      "filters": {
          "date_detection": "False",
          "dynamic_templates": [
             {

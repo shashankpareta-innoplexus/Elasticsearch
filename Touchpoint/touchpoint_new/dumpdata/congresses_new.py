@@ -1,3 +1,4 @@
+# if 'authors' in doc_sanitized.keys():
 #AUTHOR: Shashank Pareta
 
 from elasticsearch import Elasticsearch
@@ -46,7 +47,6 @@ for x in all_data:
             del doc_sanitized['author_scores']
 
         # normalize country name in authors
-        # if 'authors' in doc_sanitized.keys():
         #     i=0
         #     for y in doc_sanitized['authors']:
         #         # print y

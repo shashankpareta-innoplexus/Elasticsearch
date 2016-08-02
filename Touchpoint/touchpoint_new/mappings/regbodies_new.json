@@ -39,7 +39,7 @@
       }
    },
    "mappings": {
-      "congresses_new": {
+      "regbodies_new": {
          "date_detection": "False",
          "dynamic_templates": [
              {

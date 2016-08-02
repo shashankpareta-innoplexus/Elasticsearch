@@ -9,7 +9,7 @@ from elasticsearch import helpers
 client = MongoClient('localhost',27017)
 
 #db = client.oilbird
-db = client.societies_filter
+db = client.regbodies_filter
 
 es = Elasticsearch(['192.168.0.64:9200'])
 
