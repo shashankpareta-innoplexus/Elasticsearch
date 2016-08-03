@@ -37,6 +37,20 @@
                        "analyzer": "standard"
                     }
                  }
+              },
+              {
+                "numeric_fields" : {
+                    "match_mapping_type" : "integer|long|double",
+                    "match_pattern": "regex",
+                    "mapping" : {
+                        "coerce":"true",
+                        "doc_values":"true",
+                        "include_in_all":"true",
+                        "index":"not_analyzed",
+                        "type" : "long",
+                        "store":"true"
+                    }
+                }
               }
          ]
       }

@@ -23,7 +23,7 @@ for x in all_data:
     objectId = str(x['_id'])
     del x['_id']
     try:
-        if count < 262291:
+        if count < 1462281:
             continue
 
         doc_sanitized = json.loads(json_util.dumps(x))
@@ -44,4 +44,4 @@ for x in all_data:
         # print ret_val
 
 if(len(actions)>0):
-    helpers.bulk(es, actions, chunk_size=10, request_timeout=50)
+    helpers.bulk(es, actions, chunk_size=100, request_timeout=50)

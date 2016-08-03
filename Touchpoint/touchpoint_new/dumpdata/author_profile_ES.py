@@ -26,7 +26,7 @@ for x in all_data:
         doc_sanitized = json.loads(json_util.dumps(x))
 
         action = {
-            "_index" : "kols_onco_master_new",
+            "_index" : "kols_onco_master_new1",
             "_type" : "onco_master_new",
             "_id" : objectId,
             "_source": doc_sanitized
